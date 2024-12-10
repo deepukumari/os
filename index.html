@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Thank You, Ma'am</title>
+    <style>
+        /* Reset styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Background with a soft gradient */
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(to bottom, #f7c8e0, #f9f3f3);
+            color: #34495e;
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        /* Elegant, soft typography for the header */
+        h1 {
+            color: #e74c3c;
+            font-size: 4rem;
+            font-family: 'Dancing Script', cursive;
+            animation: fadeIn 3s ease-out forwards;
+            z-index: 10;
+        }
+
+        /* Typing effect for paragraph */
+        .typing-text {
+            color: #34495e;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 20px auto;
+            font-weight: 300;
+            opacity: 0;
+            display: inline-block;
+        }
+
+        /* Smooth fade-in for text */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Heart rain animation */
+        @keyframes heartFall {
+            0% {
+                top: -10%;
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            100% {
+                top: 100%;
+                opacity: 0.8;
+                transform: scale(1);
+            }
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 2rem;
+            color: rgba(231, 76, 60, 0.7); /* Soft red with opacity */
+            animation: heartFall linear infinite;
+            z-index: 5;
+            opacity: 0;
+        }
+
+        /* Optional background music */
+        audio {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            opacity: 0.7;
+            width: 200px;
+            background-color: transparent;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Title -->
+    <h1>Thank You, Ma'am</h1>
+    
+    <!-- Typing effect for the rest of the message -->
+    <div id="typedText"></div>
+
+    <!-- Optional background music -->
+    <audio controls autoplay loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Heart rain effect -->
+    <script>
+        // Create heart elements dynamically
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            document.body.appendChild(heart);
+
+            // Random horizontal position and animation duration
+            const startPosX = Math.random() * window.innerWidth;
+            const duration = Math.random() * 4 + 6; // Random duration between 6s and 10s
+
+            heart.style.left = startPosX + 'px';
+            heart.style.animationDuration = duration + 's';
+
+            // Remove heart after animation ends to keep things clean
+            setTimeout(() => {
+                heart.remove();
+            }, duration * 1000);
+        }
+
+        // Create hearts at intervals
+        setInterval(createHeart, 300); // Create a heart every 300ms
+
+        // Typing effect function
+        const message = [
+            "For teaching me more than Operating Systems…",
+            "You’ve taught me to believe in myself, to dream, and to reach for more.",
+            "I will miss you, but your lessons will stay with me forever.",
+            "You were the spark that made me love this subject.",
+            "This is not the end, it’s just goodbye to a beautiful chapter."
+        ];
+
+        let textIndex = 0;
+        let charIndex = 0;
+        let typingSpeed = 100; // Speed of typing in milliseconds
+        const typedTextElement = document.getElementById("typedText");
+
+        function typeText() {
+            if (textIndex < message.length) {
+                const currentMessage = message[textIndex];
+                if (charIndex < currentMessage.length) {
+                    typedTextElement.innerHTML += currentMessage.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeText, typingSpeed);
+                } else {
+                    // Move to the next message
+                    textIndex++;
+                    charIndex = 0;
+                    typedTextElement.innerHTML += "<br>"; // Add a line break between sentences
+                    setTimeout(typeText, 500); // Wait before typing the next message
+                }
+            }
+        }
+
+        // Start typing after a short delay
+        setTimeout(typeText, 2000);
+    </script>
+    
+</body>
+</html>
